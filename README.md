@@ -155,8 +155,8 @@ This project is open source and available under the [MIT License](LICENSE).
 ## 📞 Contact
 
 - **Website**: [www.asitha.site](https://www.asitha.site)
-- **Email**: [your-email@example.com](mailto:your-email@example.com)
-- **LinkedIn**: [Your LinkedIn Profile](https://linkedin.com/in/your-profile)
+- **Email**: [your-email@example.com](mailto:asitha.contact.me@gmail.com )
+- **LinkedIn**: [LinkedIn Profile](https://linkedin.com/in/your-profile)
 - **GitHub**: [AsithaKanchana1](https://github.com/AsithaKanchana1)
 
 ---
