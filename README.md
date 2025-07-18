@@ -151,12 +151,13 @@ This project is open source and available under the [MIT License](LICENSE).
 - Template inspiration: [Lohit Kolluri](https://github.com/lohitkolluri/Portfolio-Website)
 - Icons: [React Icons](https://react-icons.github.io/react-icons/)
 - 3D Models: [Three.js Examples](https://threejs.org/examples/)
+- AI Usage : For Documentation I have Used AI
 
 ## 📞 Contact
 
 - **Website**: [www.asitha.site](https://www.asitha.site)
 - **Email**: [your-email@example.com](mailto:asitha.contact.me@gmail.com )
-- **LinkedIn**: [LinkedIn Profile](https://linkedin.com/in/your-profile)
+- **LinkedIn**: [LinkedIn Profile](linkedin.com/in/asithakanchana/)
 - **GitHub**: [AsithaKanchana1](https://github.com/AsithaKanchana1)
 
 ---

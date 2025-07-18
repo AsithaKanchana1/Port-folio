@@ -33,6 +33,15 @@ import reactjs from "./tech/reactjs.png";
 // import tailwind from "./tech/tailwind.png";
 // import threejs from "./tech/threejs.png";
 
+// Import social media icons
+import linkedinIcon from "./social/linkedin.svg";
+import githubSocial from "./social/github.svg";
+import facebookIcon from "./social/facebook.svg";
+import youtubeIcon from "./social/youtube.svg";
+import whatsappIcon from "./social/whatsapp.svg";
+import instagramIcon from "./social/instagram.svg";
+import twitterIcon from "./social/twitter.svg";
+
 // Import common assets
 import logo from "./logo.svg";
 import github from "./github.png";
@@ -67,4 +76,12 @@ export {
   logo,
   menu,
   close,
+  // Social media exports
+  linkedinIcon,
+  githubSocial,
+  facebookIcon,
+  youtubeIcon,
+  whatsappIcon,
+  instagramIcon,
+  twitterIcon,
 };
