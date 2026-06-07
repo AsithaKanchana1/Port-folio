@@ -52,6 +52,12 @@ const Contact = () => {
   const [status, setStatus] = useState(null); // null | 'loading' | 'success' | 'error'
   const [errors, setErrors] = useState({});
 
+  const isEmailJsConfigured = Boolean(
+    import.meta.env.VITE_EMAILJS_SERVICE_ID &&
+      import.meta.env.VITE_EMAILJS_TEMPLATE_ID &&
+      import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+  );
+
   const validate = () => {
     const e = {};
     if (!form.name.trim()) e.name = "Name is required";
@@ -195,9 +201,23 @@ const Contact = () => {
               </div>
 
               {/* Submit */}
+              {!isEmailJsConfigured && (
+                <div className="text-sm text-yellow-700 dark:text-yellow-300 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg mb-2">
+                  Contact form not configured. You can still email me directly at
+                  <a
+                    className="text-accent font-medium ml-1"
+                    href="mailto:asitha.contact.me@gmail.com"
+                    target="_self"
+                    rel="noreferrer"
+                  >
+                    asitha.contact.me@gmail.com
+                  </a>
+                </div>
+              )}
+
               <button
                 type="submit"
-                disabled={status === "loading"}
+                disabled={status === "loading" || !isEmailJsConfigured}
                 className="flex items-center justify-center gap-2 px-6 py-3 bg-accent hover:bg-accent-hover disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-purple-200 dark:hover:shadow-purple-900/30"
               >
                 {status === "loading" ? (
