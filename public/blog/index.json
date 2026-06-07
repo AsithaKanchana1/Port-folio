@@ -1,0 +1,26 @@
+[
+  {
+    "slug": "hello-world",
+    "title": "Hello World — Starting My Blog",
+    "date": "2025-07-01",
+    "excerpt": "Welcome to my blog! Here I'll be writing about my journey as a software engineering student, projects I'm building, and things I learn along the way.",
+    "tags": ["General", "Life"],
+    "readTime": "3 min read"
+  },
+  {
+    "slug": "android-dev-journey",
+    "title": "My Android Development Journey with Java",
+    "date": "2025-07-10",
+    "excerpt": "A look at how I got started with Android development, built my first app Hidden Sri Lanka, and the lessons I learned working with Firebase and location services.",
+    "tags": ["Android", "Java", "Mobile"],
+    "readTime": "6 min read"
+  },
+  {
+    "slug": "ethical-hacking-basics",
+    "title": "What I Learned from the Cisco Ethical Hacker Course",
+    "date": "2025-07-20",
+    "excerpt": "A summary of key concepts I picked up while preparing for the Cisco Certified Ethical Hacker badge — threat intelligence, network security fundamentals, and more.",
+    "tags": ["Cybersecurity", "Networking"],
+    "readTime": "5 min read"
+  }
+]

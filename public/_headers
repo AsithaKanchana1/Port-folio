@@ -1,0 +1,21 @@
+# Cloudflare Pages cache headers
+
+# Immutable hashed assets (JS, CSS) — cache forever
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# HTML files — always revalidate
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Blog markdown files — cache for 1 hour
+/blog/*.md
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+
+# Blog index — cache for 10 minutes
+/blog/index.json
+  Cache-Control: public, max-age=600, stale-while-revalidate=3600
+
+# Fonts — cache for 1 year
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable

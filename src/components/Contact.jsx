@@ -1,284 +1,271 @@
-/**
- * Contact.jsx - Contact Form and Social Media Integration
- * 
- * This component provides a comprehensive contact solution:
- * - Professional contact form with validation
- * - EmailJS integration for form submissions
- * - 3D Earth canvas for visual appeal
- * - Social media integration for alternative contact methods
- * 
- * Features:
- * - Real-time form validation
- * - Email format validation
- * - Loading states with user feedback
- * - Success/error messaging
- * - Responsive layout (stacked on mobile, side-by-side on desktop)
- * - Social media links for alternative contact options
- * 
- * Dependencies:
- * - @emailjs/browser: For sending emails from the client-side
- * - framer-motion: For smooth animations
- * - React hooks: useState, useRef for form management
- */
-
 import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
+import {
+  FiGithub,
+  FiLinkedin,
+  FiMail,
+  FiYoutube,
+  FiSend,
+  FiCheck,
+  FiAlertCircle,
+  FiFacebook,
+} from "react-icons/fi";
+import { FaWhatsapp } from "react-icons/fa";
 
-import { styles } from "../styles";
-import { EarthCanvas } from "./canvas";
-import { SectionWrapper } from "../hoc";
-import { slideIn } from "../utils/motion";
-import { ContactSocialMedia } from "./SocialMedia";
-import "../index.css";
+const socialLinks = [
+  {
+    icon: FiMail,
+    label: "Email",
+    value: "asitha.contact.me@gmail.com",
+    href: "mailto:asitha.contact.me@gmail.com",
+  },
+  {
+    icon: FiGithub,
+    label: "GitHub",
+    value: "@AsithaKanchana1",
+    href: "https://github.com/AsithaKanchana1",
+  },
+  {
+    icon: FiLinkedin,
+    label: "LinkedIn",
+    value: "asithakanchana",
+    href: "https://www.linkedin.com/in/asithakanchana/",
+  },
+  {
+    icon: FiFacebook,
+    label: "Facebook",
+    value: "asithakanchana01",
+    href: "https://www.facebook.com/asithakanchana01",
+  },
+  {
+    icon: FaWhatsapp,
+    label: "WhatsApp",
+    value: "+94 70 133 6364",
+    href: "https://wa.me/94701336364",
+  },
+];
 
-/**
- * Reusable Input Field Component
- * 
- * Creates consistent form inputs with proper styling and accessibility
- * 
- * Props:
- * @param {string} label - Display label for the input
- * @param {string} value - Current input value
- * @param {function} onChange - Change handler function
- * @param {string} placeholder - Placeholder text
- * @param {string} name - Input name attribute
- * @param {string} type - Input type (text, email, etc.)
- */
-const InputField = ({ label, value, onChange, placeholder, name, type }) => (
-  <label className="flex flex-col">
-    <span className="text-white font-medium mb-4">{label}</span>
-    <input
-      type={type}
-      name={name}
-      value={value}
-      onChange={onChange}
-      placeholder={placeholder}
-      className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium"
-    />
-  </label>
-);
-
-/**
- * Main Contact Component
- * 
- * Handles the complete contact experience including:
- * - Form state management
- * - Email validation and submission
- * - User feedback and error handling
- * - Integration with EmailJS service
- * - Social media contact alternatives
- */
 const Contact = () => {
-  // Form reference for EmailJS submission
   const formRef = useRef();
-  
-  // Form state management
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-  
-  // UI state management
-  const [loading, setLoading] = useState(false);      // Submission loading state
-  const [emailError, setEmailError] = useState("");  // Email validation errors
-  const [nameError, setNameError] = useState("");    // Name validation errors
-  const [confirmation, setConfirmation] = useState("");  // Success/error messages
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [status, setStatus] = useState(null); // null | 'loading' | 'success' | 'error'
+  const [errors, setErrors] = useState({});
 
-  /**
-   * Handles form input changes
-   * Updates the form state when user types in any field
-   * 
-   * @param {Event} e - Input change event
-   */
+  const validate = () => {
+    const e = {};
+    if (!form.name.trim()) e.name = "Name is required";
+    if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      e.email = "Valid email required";
+    }
+    if (!form.message.trim()) e.message = "Message is required";
+    return e;
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm({
-      ...form,
-      [name]: value,
-    });
+    setForm((prev) => ({ ...prev, [name]: value }));
+    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
-  /**
-   * Validates email format using regex
-   * Ensures proper email structure before submission
-   * 
-   * @param {string} email - Email address to validate
-   * @returns {boolean} - True if email is valid
-   */
-  const validateEmail = (email) => {
-    // Standard email validation regex
-    const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    return regex.test(email);
-  };
-
-  /**
-   * Handles form submission
-   * Validates inputs, sends email via EmailJS, and provides user feedback
-   * 
-   * @param {Event} e - Form submit event
-   */
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Clear previous errors and messages
-    setEmailError("");
-    setNameError("");
-    setConfirmation("");
-
-    // Client-side validation
-    if (!validateEmail(form.email)) {
-      setEmailError("Please enter a valid email address.");
+    const errs = validate();
+    if (Object.keys(errs).length > 0) {
+      setErrors(errs);
       return;
     }
 
-    if (!form.name.trim()) {
-      setNameError("Name is required.");
-      return;
-    }
-
-    // Start loading state
-    setLoading(true);
-
-    // Send email using EmailJS
-    emailjs
-      .send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,    // EmailJS service ID (from env)
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,  // EmailJS template ID (from env)
+    setStatus("loading");
+    try {
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         {
-          from_name: form.name,                     // Sender's name
-          to_name: "Asitha Kanchana",              // Recipient name (you)
-          from_email: form.email,                   // Sender's email
-          to_email: "asitha.contact.me@gmail.com", // Your email address
-          message: form.message,                    // Message content
+          from_name: form.name,
+          to_name: "Asitha Kanchana",
+          from_email: form.email,
+          to_email: "asitha.contact.me@gmail.com",
+          message: form.message,
         },
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY    // EmailJS public key (from env)
-      )
-      .then(
-        () => {
-          // Success: email sent successfully
-          setLoading(false);
-          setConfirmation("Thank you! I will get back to you as soon as possible.");
-
-          // Clear form after successful submission
-          setForm({
-            name: "",
-            email: "",
-            message: "",
-          });
-        }
-      )
-      .catch((error) => {
-        // Error: email sending failed
-        setLoading(false);
-        console.error(error);
-        setConfirmation("Something went wrong. Please try again. :/");
-      });
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+      );
+      setStatus("success");
+      setForm({ name: "", email: "", message: "" });
+    } catch {
+      setStatus("error");
+    }
   };
 
-  /**
-   * Component Render
-   * 
-   * Layout structure:
-   * 1. Main contact section with form and 3D Earth
-   * 2. Social media section below for alternative contact methods
-   * 
-   * Responsive behavior:
-   * - Desktop: Form and Earth side-by-side
-   * - Mobile: Stacked vertically (form on top, Earth below)
-   */
+  const inputClass = (field) =>
+    `w-full px-4 py-3 rounded-lg border text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-600 outline-none transition-colors ${
+      errors[field]
+        ? "border-red-400 dark:border-red-600 focus:border-red-400"
+        : "border-gray-200 dark:border-gray-700 focus:border-accent dark:focus:border-accent"
+    }`;
+
   return (
-    <>
-      {/* Main Contact Section */}
-      <div className={`xl:mt-12 flex xl:flex-row flex-col-reverse gap-10 overflow-hidden`}>
-        
-        {/* Contact Form Section */}
-        <motion.div 
-          variants={slideIn("left", "tween", 0.2, 1)} 
-          className="flex-[0.75] bg-black-100 p-8 rounded-2xl"
+    <section id="contact" className="py-20 bg-white dark:bg-gray-950">
+      <div className="max-w-5xl mx-auto px-6">
+        {/* Section Label */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mb-12"
         >
-          {/* Section Header */}
-          <p className={styles.sectionSubText}>Get in touch</p>
-          <h3 className={styles.sectionHeadText}>Contact Me</h3>
+          <span className="text-xs font-semibold uppercase tracking-widest text-accent">
+            06 — Connect
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white mt-2">
+            Get In Touch
+          </h2>
+          <p className="text-gray-500 dark:text-gray-400 mt-3 max-w-xl">
+            Have a project or opportunity in mind? Send me a message or reach
+            out on social.
+          </p>
+        </motion.div>
 
+        <div className="grid md:grid-cols-2 gap-12">
           {/* Contact Form */}
-          <form ref={formRef} onSubmit={handleSubmit} className="mt-12 flex flex-col gap-8">
-            
-            {/* Name Input Field */}
-            <InputField
-              label="Your Name"
-              name="name"
-              value={form.name}
-              onChange={handleChange}
-              placeholder="Insert Your name here..."
-              type="text"
-            />
-            {/* Name validation error display */}
-            {nameError && <span className="text-red-500">{nameError}</span>}
-
-            {/* Email Input Field */}
-            <InputField
-              label="Email Address"
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-              placeholder="What's your email address?"
-              type="email"
-            />
-            {/* Email validation error display */}
-            {emailError && <span className="text-red-500">{emailError}</span>}
-
-            {/* Message Input Field */}
-            <InputField
-              label="Your Message"
-              name="message"
-              value={form.message}
-              onChange={handleChange}
-              placeholder="What you want to say...?"
-              type="text"
-            />
-
-            {/* Submit Button */}
-            <button
-              type="submit"
-              className="bg-tertiary py-3 px-8 rounded-xl outline-none w-fit text-white font-bold shadow-md shadow-primary"
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <form
+              ref={formRef}
+              onSubmit={handleSubmit}
+              className="flex flex-col gap-4"
             >
-              {loading ? "Sending..." : "Send"}
-            </button>
-            
-            {/* Success/Error Message Display */}
-            {confirmation && <p className="text-green-500">{confirmation}</p>}
-          </form>
-        </motion.div>
+              {/* Name */}
+              <div>
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300 block mb-1.5">
+                  Your Name
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  value={form.name}
+                  onChange={handleChange}
+                  placeholder="Asitha Kanchana"
+                  className={inputClass("name")}
+                />
+                {errors.name && (
+                  <p className="text-red-500 text-xs mt-1">{errors.name}</p>
+                )}
+              </div>
 
-        {/* 3D Earth Canvas Section */}
-        <motion.div 
-          variants={slideIn("right", "tween", 0.2, 1)} 
-          className="xl:flex-1 xl:h-auto md:h-[550px] h-[350px]"
-        >
-          <EarthCanvas />
-        </motion.div>
+              {/* Email */}
+              <div>
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300 block mb-1.5">
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  placeholder="you@example.com"
+                  className={inputClass("email")}
+                />
+                {errors.email && (
+                  <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+                )}
+              </div>
+
+              {/* Message */}
+              <div>
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300 block mb-1.5">
+                  Message
+                </label>
+                <textarea
+                  name="message"
+                  value={form.message}
+                  onChange={handleChange}
+                  rows={5}
+                  placeholder="Hi Asitha, I'd love to work with you on..."
+                  className={`${inputClass("message")} resize-none`}
+                />
+                {errors.message && (
+                  <p className="text-red-500 text-xs mt-1">{errors.message}</p>
+                )}
+              </div>
+
+              {/* Submit */}
+              <button
+                type="submit"
+                disabled={status === "loading"}
+                className="flex items-center justify-center gap-2 px-6 py-3 bg-accent hover:bg-accent-hover disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-purple-200 dark:hover:shadow-purple-900/30"
+              >
+                {status === "loading" ? (
+                  <>
+                    <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    <FiSend size={15} />
+                    Send Message
+                  </>
+                )}
+              </button>
+
+              {/* Feedback */}
+              {status === "success" && (
+                <div className="flex items-center gap-2 text-green-600 dark:text-green-400 text-sm p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                  <FiCheck size={16} />
+                  Message sent! I'll get back to you soon.
+                </div>
+              )}
+              {status === "error" && (
+                <div className="flex items-center gap-2 text-red-500 text-sm p-3 bg-red-50 dark:bg-red-900/20 rounded-lg">
+                  <FiAlertCircle size={16} />
+                  Something went wrong. Try emailing me directly.
+                </div>
+              )}
+            </form>
+          </motion.div>
+
+          {/* Social Links */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="flex flex-col gap-4"
+          >
+            <h3 className="text-sm font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-2">
+              Or reach out directly
+            </h3>
+            {socialLinks.map(({ icon: Icon, label, value, href }) => (
+              <a
+                key={label}
+                href={href}
+                target={href.startsWith("mailto") ? "_self" : "_blank"}
+                rel="noopener noreferrer"
+                className="group flex items-center gap-4 p-4 rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 hover:border-accent/50 dark:hover:border-accent/50 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
+              >
+                <div className="w-10 h-10 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-500 dark:text-gray-400 group-hover:text-accent group-hover:border-accent transition-colors shrink-0">
+                  <Icon size={18} />
+                </div>
+                <div>
+                  <p className="text-xs text-gray-400 dark:text-gray-500">
+                    {label}
+                  </p>
+                  <p className="text-sm font-medium text-gray-900 dark:text-white group-hover:text-accent transition-colors">
+                    {value}
+                  </p>
+                </div>
+              </a>
+            ))}
+          </motion.div>
+        </div>
       </div>
-      
-      {/* Social Media Contact Section */}
-      {/* Provides alternative contact methods below the main form */}
-      <div className="mt-16">
-        <ContactSocialMedia />
-      </div>
-    </>
+    </section>
   );
 };
 
-/**
- * Export Contact component wrapped with SectionWrapper HOC
- * 
- * SectionWrapper provides:
- * - Consistent section styling and spacing
- * - Scroll-triggered animations
- * - Section ID for navigation
- * - Responsive padding and layout
- * 
- * The "contact" ID allows navigation links to scroll to this section
- */
-export default SectionWrapper(Contact, "contact");
+export default Contact;

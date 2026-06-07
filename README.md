@@ -1,166 +1,210 @@
-# Asitha Kanchana - Portfolio Website
+# Asitha Kanchana — Portfolio
 
-A modern, responsive portfolio website built with React, Three.js, and Tailwind CSS. Features interactive 3D elements, smooth animations, and a fully functional contact form.
+Personal portfolio and blog for **Asitha Kanchana**, Software Engineering student at OUSL, Sri Lanka.
 
-## 🌐 Live Demo
-
-Visit the live website: [www.asitha.site](https://www.asitha.site)
-
-## ✨ Features
-
-- **Responsive Design** - Works seamlessly on desktop and mobile devices
-- **3D Interactive Elements** - Built with Three.js and React Three Fiber
-- **Smooth Animations** - Powered by Framer Motion
-- **Contact Form** - Functional email form using EmailJS
-- **Modern UI/UX** - Clean design with Tailwind CSS
-- **Fast Loading** - Optimized with Vite build tool
-
-## 🛠️ Tech Stack
-
-### Frontend
-- **React 18** - UI Library
-- **Vite** - Build tool and development server
-- **Tailwind CSS** - Styling framework
-- **Three.js** - 3D graphics library
-- **React Three Fiber** - React renderer for Three.js
-- **Framer Motion** - Animation library
-
-### Services
-- **EmailJS** - Contact form functionality
-- **GitHub Actions** - CI/CD pipeline
-- **GitHub Pages** - Hosting platform
-
-## 📁 Project Structure
-
-```
-Portfolio-Website/
-├── public/
-│   ├── assets/
-│   └── index.html
-├── src/
-│   ├── assets/
-│   │   ├── company/
-│   │   ├── projects/
-│   │   ├── tech/
-│   │   └── tech-stack/
-│   ├── components/
-│   ├── constants/
-│   ├── hoc/
-│   ├── utils/
-│   └── App.jsx
-├── .github/
-│   └── workflows/
-│       └── deploy.yml
-└── package.json
-```
-
-## 🚀 Quick Start
-
-### Prerequisites
-- Node.js (v16 or higher)
-- npm or yarn
-
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/AsithaKanchana1/Portfolio-Website.git
-   cd Portfolio-Website
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Set up environment variables**
-   ```bash
-   # Create .env.local file (for local development)
-   VITE_EMAILJS_SERVICE_ID=your_service_id
-   VITE_EMAILJS_TEMPLATE_ID=your_template_id
-   VITE_EMAILJS_PUBLIC_KEY=your_public_key
-   ```
-
-4. **Start development server**
-   ```bash
-   npm run dev
-   ```
-
-5. **Open browser**
-   Navigate to `http://localhost:5173`
-
-## 📧 EmailJS Setup
-
-1. Create an account at [EmailJS](https://www.emailjs.com/)
-2. Create an email service
-3. Create an email template
-4. Get your Service ID, Template ID, and Public Key
-5. Add them to your environment variables
-
-## 🔧 Available Scripts
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
-
-## 🚀 Deployment
-
-This project uses GitHub Actions for automatic deployment to GitHub Pages with a custom domain.
-
-### GitHub Secrets Required:
-- `VITE_EMAILJS_SERVICE_ID`
-- `VITE_EMAILJS_TEMPLATE_ID`
-- `VITE_EMAILJS_PUBLIC_KEY`
-
-The deployment workflow automatically triggers on pushes to the main branch.
-
-## 📱 Sections
-
-- **Hero** - Introduction with animated elements
-- **About** - Personal background and skills
-- **Experience** - Work history and education
-- **Tech Stack** - Technologies and tools
-- **Projects** - Featured projects with live demos
-- **Contact** - Functional contact form
-
-## 🎨 Customization
-
-To customize this portfolio for your own use:
-
-1. Replace personal information in `src/constants/index.js`
-2. Update images in `src/assets/`
-3. Modify color scheme in `tailwind.config.js`
-4. Update meta tags in `index.html`
-5. Configure your own EmailJS service
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/new-feature`)
-3. Commit changes (`git commit -am 'Add new feature'`)
-4. Push to branch (`git push origin feature/new-feature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
-## 🙏 Acknowledgments
-
-- Template inspiration: [Lohit Kolluri](https://github.com/lohitkolluri/Portfolio-Website)
-- Icons: [React Icons](https://react-icons.github.io/react-icons/)
-- 3D Models: [Three.js Examples](https://threejs.org/examples/)
-- AI Usage : For Documentation I have Used AI
-
-## 📞 Contact
-
-- **Website**: [www.asitha.site](https://www.asitha.site)
-- **Email**: [your-email@example.com](mailto:asitha.contact.me@gmail.com )
-- **LinkedIn**: [LinkedIn Profile](linkedin.com/in/asithakanchana/)
-- **GitHub**: [AsithaKanchana1](https://github.com/AsithaKanchana1)
+**Live:** [asitha.site](https://www.asitha.site)
 
 ---
 
-<div align="center">
-  Made with ❤️ by Asitha Kanchana
+## Stack
+
+| Tool | Purpose |
+|------|---------|
+| React 18 | UI framework |
+| Vite | Build tool |
+| Tailwind CSS | Styling |
+| Framer Motion | Animations |
+| React Router v6 | Client-side routing |
+| react-markdown + remark-gfm | Blog post rendering |
+| EmailJS | Contact form |
+| Cloudflare Pages | Hosting & CDN |
+
+---
+
+## Running Locally
+
+```bash
+npm install
+npm run dev
+```
+
+Open [http://localhost:5173](http://localhost:5173)
+
+---
+
+## Deploying to Cloudflare Pages
+
+### First-time setup
+1. Push this repo to GitHub
+2. Go to [Cloudflare Pages](https://pages.cloudflare.com/) → **Create a project** → **Connect to Git**
+3. Select your repository
+4. Set the following build settings:
+   - **Build command:** `npm run build`
+   - **Build output directory:** `dist`
+   - **Node.js version:** `18` (set in Environment Variables: `NODE_VERSION = 18`)
+5. Hit **Save and Deploy**
+
+### Environment Variables
+Set these in Cloudflare Pages **Settings → Environment variables**:
+
+```
+VITE_EMAILJS_SERVICE_ID   = your_service_id
+VITE_EMAILJS_TEMPLATE_ID  = your_template_id
+VITE_EMAILJS_PUBLIC_KEY   = your_public_key
+```
+
+### Continuous Deployment
+After the first deploy, every push to your `main` branch automatically triggers a new deployment. ✅
+
+---
+
+## Blog System
+
+### How it works
+- Blog posts are Markdown files stored in `public/blog/`
+- Post metadata (title, date, excerpt, tags, readTime) is in `public/blog/index.json`
+- Posts are fetched at runtime — **no build step needed** to add new posts
+
+### Writing a new post
+
+**Step 1** — Create the Markdown file:
+```
+public/blog/my-new-post.md
+```
+
+```markdown
+# My New Post Title
+
+Introduction paragraph here...
+
+## Section 1
+
+Content here. You can use **bold**, *italic*, `inline code`, and more.
+
+## Code Example
+
+\```javascript
+const hello = () => console.log("Hello, world!");
+\```
+
+> Blockquotes look like this.
+
+
+1. Numbered list
+2. Second item
+---
+
+## Adding Projects, Experience & Education
+
+### Add a Project
+- Open `src/components/Works.jsx` and add a new object to the `projects` array. Fields: `name`, `description`, `tags` (array), `image` (imported asset), `github` (optional), `demo` (optional).
+- Put project images in `src/assets/projects/` (create the folder if it doesn't exist) and import them at the top of `Works.jsx` or use the existing `src/assets/index.js` exports.
+- Example item:
+```js
+{
+  name: "My Project",
+  description: "Short description",
+  tags: ["React", "Node.js"],
+  image: myProjectImage,
+  github: "https://github.com/username/repo",
+  demo: "https://example.com/demo"
+}
+```
+
+### Add Work / Education / Certification
+- Open `src/components/Experience.jsx`.
+- The file defines three arrays: `workExperience`, `education`, and `certifications`.
+- Add a new entry to the appropriate array. Each entry supports:
+  - `title` (string)
+  - `org` (string)
+  - `date` (string)
+  - `type` ("work" | "education" | "certification")
+  - `icon` (optional imported asset)
+  - `description` (array of bullet strings)
+  - `link` (optional URL to certificate or proof)
+
+Example:
+```js
+workExperience.push({
+  title: "IT Technician",
+  org: "New Lanka Clothing PVT(LTD)",
+  date: "Current",
+  type: "work",
+  description: [
+    "Building HR and payroll modules",
+    "Developing mobile and desktop apps",
+  ],
+  link: null
+});
+```
+
+### Certifications
+- Add objects to the `certifications` array in `src/components/Experience.jsx`.
+- For certificate images/icons, place them under `src/assets/company/` and import at the top of the file (see existing `ethicalhacker` example).
+
+---
+```
+
+**Step 2** — Add metadata to `public/blog/index.json`:
+```json
+{
+  "slug": "my-new-post",
+  "title": "My New Post Title",
+  "date": "2025-08-01",
+  "excerpt": "A short description of what this post is about.",
+  "tags": ["General", "Tutorial"],
+  "readTime": "5 min read"
+}
+```
+
+**Step 3** — Push to GitHub. Cloudflare auto-deploys. Done! 🎉
+
+### Supported Markdown features
+- Headings (H1–H4)
+- **Bold**, *italic*, ~~strikethrough~~
+- `Inline code` and fenced code blocks with language hints
+- Links, images
+- Ordered and unordered lists
+- Tables
+- Blockquotes
+- Horizontal rules
+
+---
+
+## Theme
+
+The site has a **light/dark theme toggle** (default: light).
+- Click the 🌙/☀️ icon in the navbar
+- Preference is saved to `localStorage`
+
+---
+
+## Project Structure
+
+```
+src/
+  components/     # All page sections (Hero, About, Skills, etc.)
+  context/        # ThemeContext (dark/light)
+  pages/          # Blog list and post pages
+public/
+  blog/
+    index.json    # Blog metadata index
+    *.md          # Individual blog posts
+  _redirects      # Cloudflare SPA routing
+  _headers        # Cache-control headers
+  Resume.pdf      # Your resume
+```
+
+---
+
+## Contact Form (EmailJS)
+
+1. Create an account at [emailjs.com](https://www.emailjs.com/)
+2. Create a service (Gmail, Outlook, etc.)
+3. Create an email template with these variables:
+   - `{{from_name}}` — sender's name
+   - `{{from_email}}` — sender's email
+   - `{{message}}` — message body
+   - `{{to_name}}` — your name
+4. Copy Service ID, Template ID, and Public Key
+5. Add them as environment variables (see Deploying section)
