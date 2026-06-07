@@ -2,209 +2,272 @@
 
 Personal portfolio and blog for **Asitha Kanchana**, Software Engineering student at OUSL, Sri Lanka.
 
-**Live:** [asitha.site](https://www.asitha.site)
+**Live:** https://asitha.site (or your configured Cloudflare Pages domain)
 
 ---
 
-## Stack
+## Overview
 
-| Tool | Purpose |
-|------|---------|
-| React 18 | UI framework |
-| Vite | Build tool |
-| Tailwind CSS | Styling |
-| Framer Motion | Animations |
-| React Router v6 | Client-side routing |
-| react-markdown + remark-gfm | Blog post rendering |
-| EmailJS | Contact form |
-| Cloudflare Pages | Hosting & CDN |
+This repository is a Vite + React portfolio and blog built with Tailwind CSS and Framer Motion. It supports:
+- Static blog posts written as Markdown in `public/blog/`
+- A contact form using EmailJS (client-side)
+- Projects, experience, and certifications sections editable in code
+- Deployments to Cloudflare Pages (recommended)
 
 ---
 
-## Running Locally
+## Quick start (local)
+
+1. Install dependencies and run dev server:
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173)
+2. Open http://localhost:5173
+
+Build for production:
+
+```bash
+npm run build
+```
+
+The `build` script also creates a `dist/404.html` for SPA fallback (see `scripts/copy-404.js`).
 
 ---
 
-## Deploying to Cloudflare Pages
+## Blogging — Add a new post (step-by-step)
 
-### First-time setup
-1. Push this repo to GitHub
-2. Go to [Cloudflare Pages](https://pages.cloudflare.com/) → **Create a project** → **Connect to Git**
-3. Select your repository
-4. Set the following build settings:
-   - **Build command:** `npm run build`
-   - **Build output directory:** `dist`
-   - **Node.js version:** `18` (set in Environment Variables: `NODE_VERSION = 18`)
-5. Hit **Save and Deploy**
+1. Create a Markdown file in `public/blog/` named with a slug, e.g. `my-new-post.md`.
 
-### Environment Variables
-Set these in Cloudflare Pages **Settings → Environment variables**:
-
-```
-VITE_EMAILJS_SERVICE_ID   = your_service_id
-VITE_EMAILJS_TEMPLATE_ID  = your_template_id
-VITE_EMAILJS_PUBLIC_KEY   = your_public_key
-```
-
-### Continuous Deployment
-After the first deploy, every push to your `main` branch automatically triggers a new deployment. ✅
-
----
-
-## Blog System
-
-### How it works
-- Blog posts are Markdown files stored in `public/blog/`
-- Post metadata (title, date, excerpt, tags, readTime) is in `public/blog/index.json`
-- Posts are fetched at runtime — **no build step needed** to add new posts
-
-### Writing a new post
-
-**Step 1** — Create the Markdown file:
-```
-public/blog/my-new-post.md
-```
+2. Write your post using standard Markdown. Example top of the file:
 
 ```markdown
 # My New Post Title
 
-Introduction paragraph here...
+Write your introduction here.
 
-## Section 1
+## Section
 
-Content here. You can use **bold**, *italic*, `inline code`, and more.
-
-## Code Example
-
-\```javascript
-const hello = () => console.log("Hello, world!");
-\```
-
-> Blockquotes look like this.
-
-
-1. Numbered list
-2. Second item
----
-
-## Adding Projects, Experience & Education
-
-### Add a Project
-- Open `src/components/Works.jsx` and add a new object to the `projects` array. Fields: `name`, `description`, `tags` (array), `image` (imported asset), `github` (optional), `demo` (optional).
-- Put project images in `src/assets/projects/` (create the folder if it doesn't exist) and import them at the top of `Works.jsx` or use the existing `src/assets/index.js` exports.
-- Example item:
-```js
-{
-  name: "My Project",
-  description: "Short description",
-  tags: ["React", "Node.js"],
-  image: myProjectImage,
-  github: "https://github.com/username/repo",
-  demo: "https://example.com/demo"
-}
+More content...
 ```
 
-### Add Work / Education / Certification
-- Open `src/components/Experience.jsx`.
-- The file defines three arrays: `workExperience`, `education`, and `certifications`.
-- Add a new entry to the appropriate array. Each entry supports:
-  - `title` (string)
-  - `org` (string)
-  - `date` (string)
-  - `type` ("work" | "education" | "certification")
-  - `icon` (optional imported asset)
-  - `description` (array of bullet strings)
-  - `link` (optional URL to certificate or proof)
+3. Add an entry to `public/blog/index.json` describing the post (this file is used to build the post list):
 
-Example:
-```js
-workExperience.push({
-  title: "IT Technician",
-  org: "New Lanka Clothing PVT(LTD)",
-  date: "Current",
-  type: "work",
-  description: [
-    "Building HR and payroll modules",
-    "Developing mobile and desktop apps",
-  ],
-  link: null
-});
-```
-
-### Certifications
-- Add objects to the `certifications` array in `src/components/Experience.jsx`.
-- For certificate images/icons, place them under `src/assets/company/` and import at the top of the file (see existing `ethicalhacker` example).
-
----
-```
-
-**Step 2** — Add metadata to `public/blog/index.json`:
 ```json
 {
   "slug": "my-new-post",
   "title": "My New Post Title",
-  "date": "2025-08-01",
-  "excerpt": "A short description of what this post is about.",
-  "tags": ["General", "Tutorial"],
-  "readTime": "5 min read"
+  "date": "2026-06-07",
+  "excerpt": "Short summary shown on the blog list.",
+  "tags": ["General"],
+  "readTime": "3 min read"
 }
 ```
 
-**Step 3** — Push to GitHub. Cloudflare auto-deploys. Done! 🎉
+4. Commit and push. If you host on Cloudflare Pages the site will auto-deploy and the new post will be visible.
 
-### Supported Markdown features
-- Headings (H1–H4)
-- **Bold**, *italic*, ~~strikethrough~~
-- `Inline code` and fenced code blocks with language hints
-- Links, images
-- Ordered and unordered lists
-- Tables
-- Blockquotes
-- Horizontal rules
+Notes:
+- The site renders Markdown client-side, so publishing a new `.md` plus `index.json` is sufficient — no additional build step is required for content changes.
 
----
+Images in posts
+---------------
 
-## Theme
+You can include images in your blog posts in two common ways. The site serves files placed in the `public/` folder directly at the site root, so these are the easiest to reference.
 
-The site has a **light/dark theme toggle** (default: light).
-- Click the 🌙/☀️ icon in the navbar
-- Preference is saved to `localStorage`
+1) Image next to the post (recommended for single-post assets)
 
----
-
-## Project Structure
+- Put the image file inside the same folder as the Markdown post, for example:
 
 ```
-src/
-  components/     # All page sections (Hero, About, Skills, etc.)
-  context/        # ThemeContext (dark/light)
-  pages/          # Blog list and post pages
-public/
-  blog/
-    index.json    # Blog metadata index
-    *.md          # Individual blog posts
-  _redirects      # Cloudflare SPA routing
-  _headers        # Cache-control headers
-  Resume.pdf      # Your resume
+public/blog/my-new-post.md
+public/blog/my-new-post-image.jpg
 ```
+
+Then reference it in the Markdown using a relative path:
+
+```markdown
+![Screenshot of feature](./my-new-post-image.jpg)
+```
+
+2) Shared images folder (recommended for reusable assets)
+
+- Create a shared images folder such as `public/blog/images/` and commit your images there:
+
+```
+public/blog/images/project-1.png
+public/blog/images/project-2.webp
+```
+
+Reference with an absolute path from the site root:
+
+```markdown
+![Project screenshot](/blog/images/project-1.png)
+```
+
+Best practices
+- Optimize images (resize, compress, convert to `webp` where possible) before committing. Keep individual images under ~500KB for performance; smaller is better.
+- Use descriptive filenames and alt text for accessibility and SEO.
+- Prefer `webp` for photographs and `svg` for vector graphics (icons, logos).
+- If you need responsive images, add multiple sizes and use HTML `<picture>` in Markdown or custom components in React pages.
+
+Large media & storage options
+- If your blog will host many large images, consider using dedicated object storage or an image CDN instead of committing very large binaries to the Git repo.
+  - Cloudflare R2: object storage that works well with Cloudflare Pages (recommended for large media). Upload images to R2 and reference their public URLs in posts.
+  - S3 or other object storage: host large assets externally and reference absolute URLs in Markdown.
+- If you keep images in the repo and they are large, use Git LFS to avoid bloating the Git history:
+
+```bash
+# Install and initialize Git LFS once on your machine
+git lfs install
+git lfs track "public/blog/images/*"
+git add .gitattributes
+git add public/blog/images/*
+git commit -m "Add blog images via Git LFS"
+git push
+```
+
+Cloudflare Pages free-tier storage & limits (guidance)
+--------------------------------------------------
+
+- Cloudflare Pages does not enforce a small per-site static file storage quota like traditional shared hosts — Pages stores the built site artifacts produced at deploy time. However:
+  - Large files committed to your Git repo increase repository size and can slow CI/builds; prefer optimized images or external object storage for many/large assets.
+  - Bandwidth and build limits vary by Pages plan. For the most accurate, up-to-date limits (build minutes, monthly bandwidth, and R2 free tier), check Cloudflare's official docs or your Pages project's quota page in the dashboard.
+- If you expect heavy media (video, many large images), use Cloudflare R2 (object storage) + Cloudflare Images or another CDN to offload bandwidth and storage from the repo and Pages builds.
+
+Optional utilities
+- `scripts/new-post.sh` can be added to scaffold new posts and copy images into `public/blog/`.
+- An example post with a responsive `<picture>` block can be provided for reference.
 
 ---
 
-## Contact Form (EmailJS)
+## Projects, Experience & Certifications
 
-1. Create an account at [emailjs.com](https://www.emailjs.com/)
-2. Create a service (Gmail, Outlook, etc.)
-3. Create an email template with these variables:
-   - `{{from_name}}` — sender's name
-   - `{{from_email}}` — sender's email
-   - `{{message}}` — message body
-   - `{{to_name}}` — your name
-4. Copy Service ID, Template ID, and Public Key
-5. Add them as environment variables (see Deploying section)
+Where to edit:
+- Projects: `src/components/Works.jsx` (add project objects to the `projects` array).
+- Experience/Certifications: `src/components/Experience.jsx` (modify the `workExperience`, `education`, and `certifications` arrays).
+
+Project object example:
+
+```js
+{
+  name: "My Project",
+  description: "Brief description",
+  tags: ["React", "Tailwind"],
+  image: myProjectImage, // import from src/assets/projects/
+  github: "https://github.com/username/repo",
+  demo: "https://demo.example.com"
+}
+```
+
+Experience/certification entry example:
+
+```js
+{
+  title: "IT Technician",
+  org: "New Lanka Clothing PVT(LTD)",
+  date: "2024 — Present",
+  description: ["Building HR & payroll modules", "Maintaining infra"],
+  link: "https://example.com/cert.pdf"
+}
+```
+
+Image assets:
+- Put images under `src/assets/projects/` or `src/assets/company/` and import them where used. Keep files reasonably sized to avoid large bundles.
+
+---
+
+## Contact form (EmailJS)
+
+How it works:
+- The contact form uses the EmailJS client library to send messages directly from the browser.
+
+Required EmailJS setup:
+1. Create an EmailJS account at https://www.emailjs.com/
+2. Add an Email Service (Gmail / SMTP provider)
+3. Create an Email Template. Example template subject/body:
+
+Subject: New message from {{from_name}}
+
+HTML body:
+
+```html
+<h2>New contact form message</h2>
+<p><strong>From:</strong> {{from_name}} &lt;{{from_email}}&gt;</p>
+<p><strong>Message:</strong></p>
+<p>{{message}}</p>
+```
+
+4. Copy Service ID, Template ID and Public Key from the EmailJS dashboard.
+
+Local dev (.env.local):
+
+```bash
+VITE_EMAILJS_SERVICE_ID=service_xxx
+VITE_EMAILJS_TEMPLATE_ID=template_xxx
+VITE_EMAILJS_PUBLIC_KEY=public_xxx
+```
+
+Cloudflare Pages (production): set the same three variables in Project Settings → Environment variables.
+
+The code already disables the Submit button and shows a `mailto:` fallback if these variables are not set.
+
+---
+
+## Deploying & Cloudflare Pages
+
+Recommended: use Cloudflare Pages to host the built `dist/` output.
+
+Build settings in Pages:
+- Build command: `npm run build`
+- Build output directory: `dist`
+- (Optional) Node version: 18
+
+Environment variables (Pages → Settings → Environment variables):
+- `VITE_EMAILJS_SERVICE_ID`
+- `VITE_EMAILJS_TEMPLATE_ID`
+- `VITE_EMAILJS_PUBLIC_KEY`
+
+Custom domain:
+1. Add your custom domain in Cloudflare Pages (the Pages project UI).
+2. Cloudflare will provide DNS records (typically a CNAME for `www` and instructions for the root). Add them under Cloudflare DNS.
+3. Keep records proxied (orange cloud) for CDN + TLS; Cloudflare will manage certificates for Pages sites.
+
+If you see an SSL error (e.g. 525 SSL handshake failed): see Troubleshooting below.
+
+---
+
+## Troubleshooting DNS / SSL (Cloudflare)
+
+Quick checks when TLS/SSL fails:
+1. Are you using Cloudflare Pages? If yes, make sure the domain is added in the Pages project and DNS points to Pages as instructed.
+2. If your site is served from your own origin (VM, VPS), ensure the origin answers HTTPS correctly and the certificate is valid.
+3. In Cloudflare → SSL/TLS choose `Full (strict)` if your origin has a valid certificate, or `Full` if using Cloudflare Origin Certificate on the origin. Avoid `Flexible` for production.
+4. Temporarily set DNS to DNS-only (gray cloud) to test your origin directly:
+
+```bash
+curl -Iv https://asitha.online
+curl -Iv https://www.asitha.online
+```
+
+If the origin responds correctly with a valid certificate when bypassing Cloudflare, the issue is Cloudflare configuration (SSL mode or Pages setup). If the origin still fails, fix the origin TLS/certificate and firewall settings.
+
+If you want help debugging DNS records or adjusting SSL settings, gather your Cloudflare DNS records (names, types, values, proxied yes/no) and the hosting type (Cloudflare Pages or custom origin) and open an issue.
+
+---
+
+## Linting & Formatting
+
+- `npm run lint` is available but requires an ESLint config; add or update `.eslintrc.*` if you want to enforce lint rules.
+
+---
+
+## Contributing
+
+- Fork, make changes, and open a PR. Keep changes small and focused. For content updates (blog posts) add `.md` and update `public/blog/index.json`.
+
+---
+
+Support
+- To request a helper script for new posts or assistance with DNS/SSL debugging, open an issue or submit a pull request with details.
