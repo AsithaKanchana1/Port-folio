@@ -55,17 +55,17 @@ The key insight was realizing I didn't have to accept the default layout. I copi
 
 ```
 
-## Custom mim file
+## Custom .mim file
 
-I have pushed my custom mim file to github so any future users that need this setup can use my custermized mim file file link :
+I have pushed my custom `.mim` file to GitHub so others can use this setup. Link:
 
-[Git Repository link](https://github.com/AsithaKanchana1/m17n-singlish-helakuru-customkeaymap.git)
+[Git Repository](https://github.com/AsithaKanchana1/m17n-singlish-helakuru-customkeaymap.git)
 
 ## Lessons Learned
 
 1. **Local configs over system files.** Modifying files in `/usr/share/` requires root and gets wiped during updates. Utilizing `~/.m17n.d/` saved my configuration permanently.
-2. **Understand the display server.** So many bugs I encountered (like the "Wayland Diagnose" error) were because I didn't understand the difference between how X11 and Wayland handle GTK inputs.
-3. **Don't trust the terminal for CTL.** Terminals struggle with Complex Text Layouts (CTL). Sinhala modifiers will float in the wrong places in Alacritty or Kitty. Always test layout changes in a GUI app like LibreOffice.
+2. **Understand the display server.** Many bugs I encountered (including Wayland-related diagnostics) were caused by not understanding how X11 and Wayland handle GTK inputs differently.
+3. **Terminals can mishandle Complex Text Layouts (CTL).** Sinhala modifiers may appear incorrectly in terminal emulators such as Alacritty or Kitty. Always test layout changes in a GUI app like LibreOffice.
 4. **Open source gives you total control.** If a layout doesn't match your muscle memory, you can literally rewrite the source file to fix it.
 
 ## What I'd Do Differently
@@ -78,7 +78,7 @@ If I were starting over:
 
 ## The Result
 
-The custom hybrid layout was successfully completed and completely replaced my need for external apps. It's open source on my GitHub (m17n-singlish-helakuru) if you want to check it out and use it on your own Linux machine.
+The custom hybrid layout was successfully completed and replaced my need for external apps. It's open source on my GitHub (m17n-singlish-helakuru) if you want to check it out and use it on your own Linux machine.
 
 > **Pro tip:** Don't fight the operating system by forcing Windows apps through emulators. Building or configuring a native Linux solution — even if it takes more time upfront — is always the most stable path.
 
