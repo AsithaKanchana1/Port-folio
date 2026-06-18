@@ -1,5 +1,13 @@
 [
   {
+    "slug": "google-drive-backup-cachyos",
+    "title": "Automated Google Drive Incremental Backup on CachyOS",
+    "date": "2026-06-19",
+    "excerpt": "A practical guide to setting up reliable incremental Google Drive backups on CachyOS using Rclone, Fish aliases, and systemd user timers.",
+    "tags": ["Linux", "Backup", "Rclone", "CachyOS"],
+    "readTime": "7 min read"
+  },
+  {
     "slug": "my-journey-to-perfect-singlish-typing-on-linux",
     "title": "My Journey to Perfect Singlish Typing on Linux",
     "date": "2026-06-12",
