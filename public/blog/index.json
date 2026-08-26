@@ -1,5 +1,13 @@
 [
   {
+    "slug": "claude-code-omniroute-linux-fish",
+    "title": "How to Use Claude Code for Free with OmniRoute on Linux (Fish Shell)",
+    "date": "2026-08-26",
+    "excerpt": "Route Claude Code through local OmniRoute on Linux with Fish, connect OpenRouter and Anti-Gravity, and make the setup permanent.",
+    "tags": ["Linux", "Fish Shell", "Claude Code", "AI", "OmniRoute"],
+    "readTime": "6 min read"
+  },
+  {
     "slug": "google-drive-backup-cachyos",
     "title": "Automated Google Drive Incremental Backup on CachyOS",
     "date": "2026-06-19",

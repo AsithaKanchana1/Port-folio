@@ -5,6 +5,14 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { FiArrowLeft, FiCalendar, FiClock, FiTag } from "react-icons/fi";
 
+const stripFrontmatter = (md) => {
+  // Remove leading YAML frontmatter block if present.
+  if (!md.startsWith("---\n")) return md;
+  const end = md.indexOf("\n---\n", 4);
+  if (end === -1) return md;
+  return md.slice(end + 5);
+};
+
 // react-markdown v9 compatible component overrides
 const markdownComponents = {
   h1: ({ children }) => (
@@ -137,7 +145,7 @@ const BlogPostPage = () => {
         const meta = posts.find((p) => p.slug === slug);
         if (!meta) throw new Error("Not found");
         setPost(meta);
-        setContent(md);
+        setContent(stripFrontmatter(md));
         setLoading(false);
         document.title = `${meta.title} — Asitha Kanchana`;
       })

@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Claude Code with OmniRoute on Linux Fish Shell</title>
+  <desc id="desc">Stylized terminal and routing diagram representing Claude Code routed through OmniRoute with Linux and Fish shell commands.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="55%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#14b8a6"/>
+      <stop offset="100%" stop-color="#22c55e"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg)"/>
+
+  <g opacity="0.18" stroke="#334155" stroke-width="2" fill="none">
+    <path d="M0 190 H1600"/>
+    <path d="M0 360 H1600"/>
+    <path d="M0 530 H1600"/>
+    <path d="M0 700 H1600"/>
+  </g>
+
+  <rect x="120" y="170" width="1360" height="560" rx="26" fill="#0b1220" stroke="#1f2937" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="120" y="170" width="1360" height="64" rx="26" fill="#111827"/>
+
+  <circle cx="162" cy="202" r="9" fill="#ef4444"/>
+  <circle cx="190" cy="202" r="9" fill="#f59e0b"/>
+  <circle cx="218" cy="202" r="9" fill="#22c55e"/>
+
+  <text x="260" y="209" fill="#93c5fd" font-family="monospace" font-size="25">fish • claude • omniroute</text>
+
+  <text x="170" y="300" fill="#e5e7eb" font-family="monospace" font-size="30">$ npx omniroute.online start</text>
+  <text x="170" y="352" fill="#34d399" font-family="monospace" font-size="25">OmniRoute running at http://localhost:20128</text>
+
+  <text x="170" y="420" fill="#e5e7eb" font-family="monospace" font-size="30">$ set -gx ANTHROPIC_BASE_URL "http://localhost:20128"</text>
+  <text x="170" y="468" fill="#e5e7eb" font-family="monospace" font-size="30">$ set -gx ANTHROPIC_MODEL "ominiPack1"</text>
+
+  <g stroke="url(#accent)" stroke-width="6" fill="none" stroke-linecap="round">
+    <path d="M975 555 C1110 555, 1170 555, 1300 555"/>
+    <path d="M975 585 C1110 585, 1170 585, 1300 585"/>
+  </g>
+  <polygon points="1300,546 1338,555 1300,564" fill="#22c55e"/>
+  <polygon points="1300,576 1338,585 1300,594" fill="#14b8a6"/>
+
+  <rect x="170" y="540" width="770" height="120" rx="16" fill="#111827" stroke="#334155"/>
+  <text x="200" y="588" fill="#cbd5e1" font-family="monospace" font-size="24">Claude Code CLI</text>
+  <text x="200" y="624" fill="#94a3b8" font-family="monospace" font-size="20">Local routing via OmniRoute + free providers</text>
+
+  <rect x="1090" y="520" width="320" height="160" rx="16" fill="#0f172a" stroke="#334155"/>
+  <text x="1120" y="572" fill="#86efac" font-family="monospace" font-size="23">OpenRouter</text>
+  <text x="1120" y="612" fill="#5eead4" font-family="monospace" font-size="23">Anti-Gravity</text>
+
+  <text x="120" y="815" fill="#94a3b8" font-family="monospace" font-size="21">How to Use Claude Code for Free with OmniRoute on Linux (Fish Shell)</text>
+</svg>
